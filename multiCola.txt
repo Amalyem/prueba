@@ -1,0 +1,420 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package colaspilas;
+
+/**
+ *
+ * @author estudiante
+ */
+public class ColasPilas {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        PilaM m1=new PilaM();
+        m1.adicionar(new Mascota("tato","tortuga",5));
+        m1.adicionar(new Mascota("toto","gato",2));
+        m1.adicionar(new Mascota("mila","perro",3));
+        m1.adicionar(new Mascota("pelusa","gato",4));
+        m1.mostrar();
+        
+        PilaM m2=new PilaM();
+        m2.adicionar(new Mascota("ruki","perro",2));
+        m2.adicionar(new Mascota("toto","gato",1)); 
+        m2.mostrar(); 
+        
+        PilaM m3=new PilaM();
+        m3.adicionar(new Mascota("manchas","gato",2));
+        m3.adicionar(new Mascota("perla","gato",5)); 
+        m3.mostrar();
+        
+        CCircularD A=new CCircularD();
+        A.adicionar(new Dueno(111,"Maria","av 15",m1));
+        A.adicionar(new Dueno(222,"Luis","calle D",m2)); 
+        A.adicionar(new Dueno(222,"Lucy","xyz",m3));
+        
+        //1.
+        A.mostrar();
+        //2
+        System.out.println("2.mostrarlos nombres de mascota");
+        buscar(A,"Luis");
+        
+         
+         
+        //3.contar las mascotas de tipo x
+        
+        System.out.println("4.Verificar si el dueño con nombre x tiene alguna mascota tipo y");
+        verificar(A,"Maria","tortuga");
+        //4.Verificar si el dueño con nombre x tiene alguna mascota tipo y
+        //5.Aldueño con nombre x;agregarleuna nueva mascota
+        
+    }
+    public static void buscar(CCircularD a, String x)
+    {
+        int n=a.nroelem();
+        for(int i=1;i<=n;i++)
+        {
+            Dueno d=a.eliminar();
+            if(d.getNom().equals(x))
+                susMascotas(d.getA());
+                 
+            a.adicionar(d);  
+        } 
+                
+    }
+    public static void susMascotas(PilaM a)
+    {
+        PilaM b=new PilaM();
+        while(!a.esvacia())
+        {
+            Mascota m=a.eliminar();
+            System.out.println(m.getNom());
+            b.adicionar(m);
+        }
+        a.vaciar(b);
+    }
+    public static void verificar(CCircularD a,String x,String y)
+    {
+        int n=a.nroelem();
+        for(int i=1;i<=n;i++)
+        {
+            Dueno d=a.eliminar();
+            if(d.getNom().equals(x))
+                mascotasY(d.getA(),y);
+                 
+            a.adicionar(d);  
+        } 
+        
+        
+        
+        
+        
+        
+    }
+    public static void mascotasY(PilaM a,String y)
+    {
+        PilaM b=new PilaM();
+        while(!a.esvacia())
+        {
+             
+            Mascota m=a.eliminar();
+            if(m.getTipo().equals(y))
+            System.out.println("Si tiene");
+            b.adicionar(m);
+        }
+        a.vaciar(b);
+    }
+    /*
+    public static void buscar(CCircularD a, String x)
+    {
+        int n=a.nroelem();
+        for(int i=1;i<=n;i++)
+        {
+            Dueno d=a.eliminar();
+            //verificar
+            if(d.getNom().equals(x))
+                susMascotas(d.getA());
+            a.adicionar(d); 
+         } 
+        
+    }
+    public static void susMascotas(PilaM a){
+        PilaM b= new PilaM();
+        while(!a.esvacia())
+        {
+            Mascota m=a.eliminar();
+            System.out.println(m.getNom());
+            b.adicionar(m);
+            
+        }
+        a.vaciar(b);
+    }
+    */
+}
+---------------------------------------------------------------
+package colaspilas;
+  
+public class Mascota {
+    private String nom,tipo;
+    private int edad;
+    public Mascota(String a,String b,int c){
+        nom=a;
+        tipo=b;
+        edad=c;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    public void mostrar(){
+        System.out.println(nom+" "+tipo+" "+edad);
+    }
+}
+---------------------------------------------------------------------
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package colaspilas;
+
+/**
+ *
+ * @author estudiante
+ */
+public class PilaM {
+    private int max=30;
+    private Mascota v[]=new Mascota[max+1];
+    private int tope;
+    
+    PilaM() //crea pila vacia
+    {
+        tope=0;
+    }
+    boolean esvacia ()
+    {
+	if (tope == 0)
+	    return (true);
+	return (false);
+    }
+    boolean esllena ()
+    {
+	if (tope == max)
+	    return (true);
+	return (false);
+    }
+    int nroelem ()
+    {
+	return (tope);
+    }
+     void adicionar (Mascota elem)
+    {
+	if (!esllena ())
+	{
+	    tope++;
+	    v [tope] = elem;
+	}
+	else
+	    System.out.println ("Pila llena");
+    }
+    Mascota eliminar ()
+    {
+	Mascota elem = null;
+	if (!esvacia ())
+	{
+	    elem = v [tope];
+	    tope--;
+	}
+	else
+	    System.out.println ("Pila vacia");
+	return (elem);
+    }
+    
+     void mostrar ()
+    {
+	Mascota elem;
+	if (esvacia ())
+	    System.out.println ("Pila vacia");
+	else
+	{
+	    System.out.println ("\n Mascotas de la Pila ");
+	    PilaM aux = new PilaM ();
+	    while (!esvacia ())
+	    {
+		elem = eliminar ();
+		aux.adicionar (elem);
+		elem.mostrar();
+	    }
+	    while (!aux.esvacia ())
+	    {
+		elem = aux.eliminar ();
+		adicionar (elem);
+	    }
+	}
+        }
+    
+    void vaciar (PilaM a)
+    {
+	while (!a.esvacia ())
+	    adicionar (a.eliminar ());
+
+    }
+    
+}
+------------------------------------------------------------------
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package colaspilas;
+
+/**
+ *
+ * @author estudiante
+ */
+public class Dueno {
+    private int ci;
+    private String nom,dir;
+    private PilaM a;
+    public Dueno(int a,String b,String c,PilaM d){
+        ci=a;
+        nom=b;
+        dir=c;
+        this.a=d;
+        
+    }
+
+    public int getCi() {
+        return ci;
+    }
+
+    public void setCi(int ci) {
+        this.ci = ci;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getDir() {
+        return dir;
+    }
+
+    public void setDir(String dir) {
+        this.dir = dir;
+    }
+
+    public PilaM getA() {
+        return a;
+    }
+
+    public void setA(PilaM a) {
+        this.a = a;
+    }
+     public void mostrar(){
+        System.out.println(ci+" "+nom+" "+dir+" ");
+        a.mostrar();
+    }
+ 
+    
+}
+-------------------------------------------------------
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package colaspilas;
+
+/**
+ *
+ * @author estudiante
+ */
+public class CCircularD {
+    private int max=100;
+    private Dueno v[]=new Dueno[max+1];
+    private int ini,fin;
+    CCircularD()
+    {
+        ini=fin=0;
+    }
+    int nroelem ()
+    {
+        return ((max + fin - ini) % max);
+    }
+    boolean esvacia ()
+    {
+        if (nroelem () == 0)
+            return (true);
+        return (false);
+    }
+    boolean esllena ()
+    {
+        if (nroelem () == max)
+            return (true);
+        return (false);
+    }
+
+
+    void adicionar (Dueno elem)
+    {
+        if (!esllena ())
+        {
+
+            fin = (fin + 1) % max;
+            v [fin] = elem;
+        }
+        else
+            System.out.println ("Cola circular llena");
+    }
+
+
+    Dueno eliminar ()
+    {
+        Dueno elem = null;
+        if (!esvacia ())
+        {
+            ini = (ini + 1) % max;
+            elem = v [ini];
+            if (nroelem () == 0)
+                ini = fin = 0;
+        }
+        else
+            System.out.println ("Cola circular vacia");
+        return (elem);
+    }
+    void mostrar ()
+    {
+        Dueno elem;
+        if (esvacia ())
+            System.out.println ("Cola vacia xxx");
+        else
+        {
+            System.out.println ("\n Dueno de la Cola ");
+            CCircularD aux = new CCircularD ();
+            while (!esvacia ())
+            {
+               elem = eliminar ();
+               aux.adicionar (elem);
+               elem.mostrar();
+            }
+            vaciar(aux);
+        }
+    }
+    
+    void vaciar (CCircularD a)
+    {
+        while (!a.esvacia ())
+            adicionar (a.eliminar ());
+    }
+}

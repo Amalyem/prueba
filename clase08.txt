@@ -1,0 +1,352 @@
+///ESTUDIANTES
+public class Estudiante {
+   private String sigla,nom,pat,mat;
+   private int ci,nota;
+
+    public Estudiante(String a, int b, String c, String d,  String e, int f) {
+        sigla = a;
+        ci = b;
+        nom = c;
+        pat = d;
+        mat = e;
+        nota = f;
+        
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPat() {
+        return pat;
+    }
+
+    public void setPat(String pat) {
+        this.pat = pat;
+    }
+
+    public String getMat() {
+        return mat;
+    }
+
+    public void setMat(String mat) {
+        this.mat = mat;
+    }
+
+    public int getCi() {
+        return ci;
+    }
+
+    public void setCi(int ci) {
+        this.ci = ci;
+    }
+
+    public int getNota() {
+        return nota;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
+    }
+    public void mostrar()
+    {
+        System.out.println("["+sigla+" "+ci+" "+nom+" "+pat+" "+mat+" "+nota+"]");
+    }
+   
+   
+           
+           
+}
+//MATERIA
+public class Materia {
+    private String sigla,descripcion;
+    public Materia( String a,String b){
+        sigla=a;
+        descripcion=b;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    public void mostrar(){
+        System.out.println("<"+sigla+" "+descripcion+">");
+    }
+    
+    
+}
+-----------------------------------------
+public class CSimpleM {
+    private int max=50;
+    private Materia v[]= new Materia [max+1];
+    private int ini, fin;
+    
+     CSimpleM()
+    {
+        ini=fin=0;
+    }
+    boolean esvacia ()
+    {
+        if (ini == 0 && fin == 0)
+            return (true);
+        return (false);
+    }
+    boolean esllena ()
+    {
+        if (fin == max)
+            return (true);
+        return (false);
+    }
+    int nroelem ()
+    {
+        return (fin - ini);
+    }
+    void adicionar (Materia elem)
+    {
+        if (!esllena ())
+        {
+             
+            v [fin+1] = elem;
+            fin++;
+        }
+        else
+            System.out.println ("Cola Simple llena");
+    }
+    Materia eliminar ()
+    {
+        Materia elem = null;
+        if (!esvacia ())
+        {
+            ini++;
+           
+            elem = v [ini ];
+            if (ini == fin)
+                ini = fin = 0;
+        }
+        else
+            System.out.println ("Cola Simple vacia");
+        return (elem);
+    }
+    void mostrar ()
+    {
+       
+            CSimpleM aux = new CSimpleM ();
+            while (!esvacia ())
+            {
+                Materia elem = eliminar ();
+                elem.mostrar();
+                aux.adicionar(elem);
+                //aux.adicionar (elem);
+                //System.out.print (" " + elem);
+            }
+            
+        
+    }
+    /*void llenar (int n)
+    {
+        int i;
+        for (i = 1 ; i <= n ; i++)
+            adicionar (Leer.dato ());
+    }*/
+    void vaciar (CSimpleM a)
+    {
+        while (!a.esvacia ())
+            adicionar (a.eliminar ());
+    }
+}
+------------------------------------------
+public class CSimpleE {
+    private int max=50;
+    private Estudiante v[]= new Estudiante [max+1];
+    private int ini, fin;
+    
+     CSimpleE()
+    {
+        ini=fin=0;
+    }
+    boolean esvacia ()
+    {
+        if (ini == 0 && fin == 0)
+            return (true);
+        return (false);
+    }
+    boolean esllena ()
+    {
+        if (fin == max)
+            return (true);
+        return (false);
+    }
+    int nroelem ()
+    {
+        return (fin - ini);
+    }
+    void adicionar (Estudiante elem)
+    {
+        if (!esllena ())
+        {
+             
+            v [fin+1] = elem;
+            fin++;
+        }
+        else
+            System.out.println ("Cola Simple llena");
+    }
+    Estudiante eliminar ()
+    {
+        Estudiante elem = null;
+        if (!esvacia ())
+        {
+           
+            ini++;
+            elem = v [ini ];
+            if (ini == fin)
+                ini = fin = 0;
+        }
+        else
+            System.out.println ("Cola Simple vacia");
+        return (elem);
+    }
+    void mostrar ()
+    {
+       
+            CSimpleE aux = new CSimpleE ();
+            while (!esvacia ())
+            {
+                Estudiante elem = eliminar ();
+                elem.mostrar();
+                aux.adicionar(elem);
+                //aux.adicionar (elem);
+                //System.out.print (" " + elem);
+            }
+            
+        
+    }
+    /*void llenar (int n)
+    {
+        int i;
+        for (i = 1 ; i <= n ; i++)
+            adicionar (Leer.dato ());
+    }*/
+    void vaciar (CSimpleE a)
+    {
+        while (!a.esvacia ())
+            adicionar (a.eliminar ());
+    }
+    
+}
+---------------------------------------------MAINNN
+ public static void main(String[] args) {
+        // TODO code application logic here
+        //SEAN LAS COLAS DE MATERIAS >>SIGLA, DESCRIPCION
+        CSimpleM A= new CSimpleM();
+        A.adicionar(new Materia("INF111","PROGRAMACION 1"));
+        A.adicionar(new Materia("INF121","PROGRAMACION II"));
+        A.adicionar(new Materia("INF131","PROGRAMACION III"));
+        A.adicionar(new Materia("INF113","PROGRAMACION WEB 1"));
+        A.mostrar();
+        //COLA DE ESTUDIANTES >>SIGLA,CI,NOMBRE,PAT,MAT,NOTA
+        CSimpleE B= new CSimpleE();
+        B.adicionar(new Estudiante("INF121",111,"JUAN","PEREZ","RIOS",65));
+        B.adicionar(new Estudiante("INF121",333,"ANA","LOZA","NINA",35));
+        B.adicionar(new Estudiante("INF131",111,"JUAN","PEREZ","RIOS",70));
+        B.adicionar(new Estudiante("INF111",555,"MARIA","MENDOZA","ROCA",65));
+        B.adicionar(new Estudiante("INF121",777,"PEDRO","TORREZ","SOZA",65));
+        B.adicionar(new Estudiante("INF113",333,"ANA","LOZA","NINA",44));
+        B.adicionar(new Estudiante("INF111",777,"PEDRO","TORREZ","SOZA",65));
+        B.adicionar(new Estudiante("INF113",111,"JUAN","PEREZ","RIOS",38));
+        System.out.println("\n COLAD DE ESTUDIANTES");
+        B.mostrar();
+        //1.mostrar colas
+        //2.de cada materia mostrar nom,pat,mat de sus estudiantes
+        listado(A,B);
+        
+        //3.mostrar las materias con sigla x y el numero de estudiantes
+        mostrarE(A,B,"INF111");
+        //4.del estudiante C y X mostrar la sigla y descripcion de sus materias
+        //5.de cada materia determinar el numero de aprobados y el numero de reprobados
+    }
+    
+    public static void listado(CSimpleM a, CSimpleE b)  
+    {
+        CSimpleM a1= new CSimpleM();
+        while(!a.esvacia())
+        {
+            Materia m=a.eliminar();
+            System.out.println("MATERIA: "+m.getSigla()+" "+m.getDescripcion());
+            //buscar estudiantes
+            buscar(b,m.getSigla());
+            
+            a1.adicionar(m);
+        }
+        a.vaciar(a1);
+    }
+    public static void buscar(CSimpleE a,String s)
+    {
+        CSimpleE b = new CSimpleE();
+        while(!a.esvacia())
+        {
+            Estudiante e = a.eliminar();
+            if(e.getSigla().equals(s))
+                System.out.println("\t"+e.getNom()+" "+e.getPat()+" "+e.getMat());
+            b.adicionar(e);
+        }
+        a.vaciar(b);
+    }
+    //3.mostrar las materias con sigla x y el numero de estudiantes
+    public static void mostrarE(CSimpleM a,CSimpleE b, String x)
+    {
+        CSimpleM A= new CSimpleM();
+        int c=0;
+        while(!a.esvacia())
+        {
+            Materia m = a.eliminar();
+            if(m.getSigla().equals(x))
+             c=c+1;
+            A.adicionar(m);
+        }
+        System.out.println(c);
+        a.vaciar(A);
+        
+    } 
+    /*public static void buscarE(CSimpleE a,String s)
+    {
+        CSimpleE b = new CSimpleE();
+        while(!a.esvacia())
+        {
+            Estudiante e = a.eliminar();
+            if(e.getSigla().equals(s))
+                System.out.println("\t"+e.getNom()+" "+e.getPat()+" "+e.getMat());
+            b.adicionar(e);
+        }
+        a.vaciar(b);
+    } */       
+}
+
+
+    
+
+
+

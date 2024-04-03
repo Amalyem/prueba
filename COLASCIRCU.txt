@@ -1,0 +1,294 @@
+public class Niño {
+    private String nombre , sexo;
+    private int edad;
+    public Niño(String a, String b,int c){
+        nombre=a;
+        sexo=b;
+        edad=c;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    public void mostrar(){
+        System.out.println(nombre+" "+sexo+" "+edad);
+    }
+}
+
+----------------------------------------------------------------
+public class CCircularN {
+    private int max=50;
+    private Niño[]v =new Niño[max+1];
+    private int ini, fin;
+    
+    public CCircularN(){
+     ini=fin=0;
+}
+    int nroelem ()
+    {
+        return ((max + fin - ini) % max);
+    }
+
+
+    boolean esvacia ()
+    {
+        if (nroelem () == 0)
+            return (true);
+        return (false);
+    }
+
+
+    boolean esllena ()
+    {
+        if (nroelem () == max - 1)
+            return (true);
+        return (false);
+    }
+
+
+    void adicionar (Niño elem)
+    {
+        if (!esllena ())
+        {
+
+            fin = (fin + 1) % max;
+            v [fin] = elem;
+        }
+        else
+            System.out.println ("Cola circular llena");
+    }
+
+
+    Niño eliminar ()
+    {
+        Niño elem = null;
+        if (!esvacia ())
+        {
+            ini = (ini + 1) % max;
+            elem = v [ini];
+            if (nroelem () == 0)
+                ini = fin = 0;
+        }
+        else
+            System.out.println ("Cola circular vacia");
+        return (elem);
+    }
+
+
+    void mostrar ()
+    {
+        Niño elem;
+        if (esvacia ())
+            System.out.println ("Cola vacia xxx");
+        else
+        {
+            System.out.println ("\n Niños de la Cola ");
+            CCircularN aux = new CCircularN ();
+            while (!esvacia ())
+            {
+                elem = eliminar ();
+                aux.adicionar (elem);
+                elem.mostrar();
+            }
+            while (!aux.esvacia ())
+            {
+                elem = aux.eliminar ();
+
+                adicionar (elem);
+            }
+        }
+    }
+
+
+   /* void llenar (int n)
+    {
+        int i;
+        for (i = 1 ; i <= n ; i++)
+        {
+            Fraccion elem = new Fraccion ();
+            elem.leer ();
+            adicionar (elem);
+        }
+    }*/
+
+
+
+    /*void invertir ()
+    {
+        CCircularN a = new CCircularN ();
+        CCircularN b = new CCircularN ();
+        while (!esvacia ())
+        {
+            while (nroelem () != 1)
+                a.adicionar (eliminar ());
+            b.adicionar (eliminar ());
+            while (!a.esvacia ())
+                adicionar (a.eliminar ());
+        }
+        while (!b.esvacia ())
+            adicionar (b.eliminar ());
+
+    }*/
+
+
+    void vaciar (CCircularN a)
+    {
+        while (!a.esvacia ())
+            adicionar (a.eliminar ());
+
+    }
+    
+}
+-------------------------------------------------------------
+ public static void main(String[] args) {
+        // TODO code application logic here
+        //sea una colar circular Niñod y niñas
+        //nombre sexo y edad
+        CCircularN A=new CCircularN();
+        A.adicionar(new Niño("Luis","Masculino",5));
+        A.adicionar(new Niño("Juan","Masculino",9));
+        A.adicionar(new Niño("Maria","femenino",2));
+        A.adicionar(new Niño("Ana","Femenino",3));
+        A.adicionar(new Niño("Pedro","Masculino",7));
+        A.adicionar(new Niño("Rocio","Femenino",1));
+        A.adicionar(new Niño("Lola","Femenino",1));
+        A.adicionar(new Niño("Pati","Femenino",2));  
+        A.adicionar(new Niño("Susi","Femenino",7));
+            
+        A.mostrar();
+        System.out.println("------------------------------------------------");
+        //Problemas
+        //1.cuantos niños tienen la edad x?
+        EdadX(A,1);
+        EdadX2(A,1);
+        //2.determinar la mayor edad
+        System.out.println("------------------------------------------------");
+        Mayor(A);
+        //3.mostrar a todas las niñas
+        System.out.println("------------------------------------------------");
+        MostrarF(A);
+        //4.llevar a los niños con edad menor de 5 adelante
+        System.out.println("------------------------------------------------");
+        menor5(A);
+        A.mostrar();
+         
+        //SEAN DOS COLAS
+        //5.llevar a las niñas a la primera cola y a los niños a la segunda cola
+        System.out.println("------------------------------------------------");
+        CCircularN B=new CCircularN();
+        B.adicionar(new Niño("Maria","Femenino",6));
+        B.adicionar(new Niño("Juan","Masculino",9));
+        B.adicionar(new Niño("Luz","femenino",2));
+        B.adicionar(new Niño("Ana","Femenino",3));
+        B.adicionar(new Niño("Tae","Masculino",10));
+        B.adicionar(new Niño("Rocio","Femenino",1));
+        B.adicionar(new Niño("Lola","Femenino",1));
+        B.adicionar(new Niño("Pati","Femenino",2));  
+        B.adicionar(new Niño("Susi","Femenino",7));
+            
+        B.mostrar();
+        System.out.println("------------------------------------------------");
+        cola2(A,B);
+    }
+    public static void EdadX2(CCircularN a,int x)
+    {
+        int c=0;
+        int n=a.nroelem();
+         
+        for(int i=0;i<=n;i++)
+        {
+            Niño z=a.eliminar();
+            if(z.getEdad()==x)
+                c++;
+            a.adicionar(z);
+        }
+        System.out.println("Cantidad: "+c);
+    }
+    public static void EdadX(CCircularN a,int x)
+    {
+        int c=0;
+        CCircularN b= new CCircularN();
+        while(!a.esvacia())
+        {
+            Niño w=a.eliminar();
+            if(w.getEdad()==x)
+                c++;
+            b.adicionar(w);
+            
+        }
+        a.vaciar(b);
+        System.out.println("Cantidad: "+c);
+    }
+    public static void Mayor(CCircularN a){
+        CCircularN b= new CCircularN();
+        int may=0;
+        while(!a.esvacia()){
+            Niño z=a.eliminar();
+            if(z.getEdad()>may)
+                may=z.getEdad();
+            b.adicionar(z);  
+        }
+         System.out.println("Mayoor Edad: "+may);
+         a.vaciar(b);
+     }
+    public static void MostrarF(CCircularN a){
+        CCircularN aux= new CCircularN();
+        while(!a.esvacia()){
+            Niño z=a.eliminar();
+            if(z.getSexo()=="Femenino")
+                System.out.println(z.getNombre()+" "+z.getSexo()+" "+z.getEdad());
+            aux.adicionar(z);
+            
+        }
+        a.vaciar(aux);
+    }
+    public static void menor5(CCircularN a){
+        CCircularN aux= new CCircularN();
+        CCircularN aux2= new CCircularN();
+        while(!a.esvacia()){
+             Niño z=a.eliminar();
+             if(z.getEdad()<=5)
+                 aux.adicionar(z);
+             else
+                 aux2.adicionar(z);
+             
+        }
+        
+        a.vaciar(aux);
+        a.vaciar(aux2);
+    }
+     public static void cola2(CCircularN a,CCircularN b){
+        CCircularN aux= new CCircularN();
+        CCircularN aux2= new CCircularN();
+         while(!a.esvacia()){
+            Niño z=a.eliminar();
+            Niño z1=a.eliminar();
+            if(z.getSexo()=="Femenino")
+                aux.adicionar(z);
+            else
+                aux2.adicionar(z1);
+         }
+         a.vaciar(aux);
+         a.vaciar(aux2);
+     }
+}
